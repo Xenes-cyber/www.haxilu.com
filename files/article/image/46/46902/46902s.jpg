@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	用户登录_个人中心_起点中文网
+</title><meta http-equiv="X-UA-Compatible" content="IE=7" /><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /><meta http-equiv="X-UA-Compatible" content="chrome=1" /><meta http-equiv="imagetoolbar" content="false" /><meta name="robots" content="all" /><meta name="googlebot" content="all" /><meta name="baiduspider" content="all" /><meta name="xcode-display" content="render" /><meta name="company" content="起点,QIDIAN.COM" /><meta name="copyright" content="本页版权 qidian.com 起点中文网所有。All Rights Reserved" /><meta name="author" content="QIDIAN.COM" /><meta name="viewport" content="width=1180" /><link rel="icon" href="/images/favicon_qidian.ico" type="image/x-icon" /><link rel="shortcut icon" href="/images/favicon_qidian.ico" type="image/x-icon" /><link rel="apple-touch-icon" href="/images/favicon_qidian.ico" type="image/x-icon" />
+    <style type="text/css">
+        @import url("/skins/basic/basic.css?20140211");
+        @import url("/skins/popup.css?20140211");
+        @import url("/skins/loading.css?20140211");
+    </style>
+    
+    <script type="text/javascript" src="/js/jquery.js?20140211"></script>
+    <script type="text/javascript" src="/js/jquery.string.js?20140211"></script>
+    <script type="text/javascript" src="/js/jquery.rotate.js?20140211"></script>
+    <script type="text/javascript" src="/js/jquery.loading.js?20140211"></script>
+    <script type="text/javascript" src="/js/jquery.dialog.min.js?20140211"></script>
+    <script type="text/javascript" src="/js/public.js?20140211"></script>
+    <script type="text/javascript" src="/js/header.js?20140211"></script>
+    <script type="text/javascript" src="/js/imageCode.js?20140211"></script>
+    <script type="text/javascript" src="/js/sosu.js?20140211"></script>
+    <script type="text/javascript" src="/js/complaint.js?20140211"></script>
+    <script type="text/javascript" src="/js/helpService.js?20140211"></script>
+    <script type="text/javascript" src="http://uedas.qidian.com/javascript/statlib.js"></script>
+    <script type="text/javascript">CmfuTracker();</script>
+    
+    <style type="text/css">
+        @import url("/skins/login.css?20140211");
+    </style>
+    <script type="text/javascript">
+        jQuery(document).ready(function()
+        {
+            try
+            {
+                document.domain = "qidian.com";
+            }
+            catch (e)
+            {
+            }
+        });
+        jQuery(document).ready(function()
+        {
+            try
+            {
+                var exp = new Date(), cval = 0;
+                exp.setTime(exp.getTime() - 10000000);
+                document.cookie = "cmfuToken" + "=" + cval + ";expires=" + exp.toGMTString();
+                document.cookie = "cmfuToken" + "=" + cval + ";domain=.qidian.com;expires=" + exp.toGMTString();
+            }
+            catch (e)
+            {
+            }
+            //广播滚动
+            var scroll = 0;
+            function marquee()
+            {
+                if (scroll >= jQuery("#ul_hottopic li:first").outerWidth())
+                {
+                    var firstLi = jQuery("#ul_hottopic li:first").remove();
+                    firstLi.insertAfter(jQuery("#ul_hottopic li:last"));
+                    jQuery("#ul_hottopic li:last").css("margin-left", 0);
+                    scroll = 0;
+                }
+                else
+                {
+                    scroll++;
+                    var marginleft = jQuery("#ul_hottopic li:first").css("margin-left");
+                    var ml = marginleft.replace("px", "") - 1;
+                    jQuery("#ul_hottopic li:first").css("margin-left", ml);
+                }
+            }
+            var myMar = window.setInterval(marquee, 50);
+            jQuery("#ul_hottopic").mouseover(function()
+            {
+                window.clearInterval(myMar);
+            });
+            jQuery("#ul_hottopic").mouseout(function()
+            {
+                myMar = window.setInterval(marquee, 50);
+            });
+        });
+    </script>
+</head>
+<body>
+    
+<script type="text/javascript" src="/js/snda_os_widget.js"></script>
+<div id="head-bar">
+    <div class="opacity-bar"></div>
+    <div class="fix-layout head-links">
+        <div class="head-fl-left">
+            您好，欢迎来到起点！<a href="http://www.qidian.com/reg/regpre.aspx" target="_blank">[注册通行证]</a>
+        </div>
+        <div class="head-fl-right">
+            <span><a href="http://www.qidian.com/Default.aspx" target="_blank" title="起点首页">起点首页</a></span>
+            <span><a href="http://www.qdmm.com/" target="_blank" title="女生网" class="nv">女生网</a></span>
+            <span><a href="http://www.qdwenxue.com/" title="文学网" target="_blank" class="wen">文学网</a></span>
+            <span id="span_webGame"><a class="arrow" href="javascript:void(0);">WEB游戏</a></span>
+            <span><a href="http://shop.qidian.com/" target="_blank">商城</a></span>
+            <span id="span_search"><a class="arrow" href="javascript:void(0);">搜书</a></span>
+            <span id="span_help"><a class="arrow" href="javascript:void(0);">用户帮助</a></span>
+            <span id="span_moreSites"><a class="arrow" href="javascript:void(0);">分类导航</a></span>
+       </div>
+    </div>
+</div>
+<iframe id="head_overlay"></iframe>
+<div id="floater">
+    <ul>
+        <li>
+            <h3>站点分类</h3>
+            <div style="border-bottom: 1px dashed rgb(204, 204, 204);">
+                <a href="http://www.qidian.com/Default.aspx" target="_blank">简体版</a>&nbsp;&nbsp;
+                <a href="http://big5.qidian.com/Default.aspx" target="_blank">繁体版</a>&nbsp;&nbsp;
+                <a href="http://www.qidian.cn/" target="_blank">手机版&nbsp;&nbsp;</a>
+                <a href="http://banquan.qidian.com/" target="_blank">版权频道</a>&nbsp;&nbsp;
+                <a href="http://game.qidian.com/" target="_blank">游戏频道</a>
+           </div>
+        </li>
+        <li>
+            <h3>分类频道</h3>
+            <ul style="border-bottom: 1px dashed rgb(204, 204, 204);" class="subcate">
+                <li><a href="http://xuanhuan.qidian.com/" target="_blank">玄幻</a>·<a href="http://qihuan.qidian.com/" target="_blank">奇幻</a></li><li><a href="http://wuxia.qidian.com/" target="_blank">武侠</a>·<a href="http://xianxia.qidian.com/" target="_blank">仙侠</a></li><li><a href="http://dushi.qidian.com/" target="_blank">都市</a>·<a href="http://qingchun.qidian.com/" target="_blank">青春</a></li><li><a href="http://lishi.qidian.com/" target="_blank">历史</a>·<a href="http://junshi.qidian.com/" target="_blank">军事</a></li><li><a href="http://youxi.qidian.com/" target="_blank">游戏</a>·<a href="http://jingji.qidian.com/" target="_blank">竞技</a></li><li><a href="http://kehuan.qidian.com/" target="_blank">科幻</a>·<a href="http://lingyi.qidian.com/" target="_blank">灵异</a></li><li><a href="http://tongren.qidian.com/" target="_blank">同人</a>·<a href="http://quanben.qidian.com/" target="_blank">全本</a></li><li><a href="http://www.qidian.com/book/bookstore.aspx?channelid=14&subcategoryid=-1&tag=all&size=-1&action=-1&orderid=6&p=all&pageindex=1&update=-1&vip=-1" target="_blank">图文</a>·<a href="http://tushu.qidian.com/" target="_blank">云城</a></li><li><a href="http://chuban.qidian.com/" target="_blank">文学</a>·<a target="_blank" href="http://www.qdmm.com/">女生</a></li><li><a href="http://sjg.qidian.com/" target="_blank">三江</a>·<a target="_blank" href="http://dm.qidian.com/">漫画</a></li>
+            </ul>
+        </li>
+        <li>
+            <h3>互动功能</h3>
+            <div style="border-bottom: 1px dashed rgb(204, 204, 204);">
+                <a href="http://all.qidian.com" target="_blank">书库</a>&nbsp;&nbsp;<a href="http://top.qidian.com" target="_blank">排行榜</a>&nbsp;&nbsp;<a href="http://www.qidian.com/hot/hotIndex.aspx" target="_blank">专题</a>&nbsp;&nbsp;<a href="http://pingba.qidian.com" target="_blank">评吧</a>&nbsp;&nbsp;<a href="http://www.qidian.com/club/clubIndex.aspx" target="_blank">俱乐部</a>&nbsp;&nbsp;<a href="http://bbs.qidian.com/" target="_blank">论坛</a>
+            </div>
+        </li>
+        <li>
+            <h3>作家相关</h3>
+            <div>
+                <a href="/w/apply/1" target="_blank">投稿</a>&nbsp;&nbsp;
+                <a href="http://www.qidian.com/HelpCenter/default.aspx?type=0&categoryid=58&parentid=53" target="_blank">签约</a>&nbsp;&nbsp;
+                <a href="http://www.qidian.com/ploy/2013zz/index_new.html" target="_blank">福利</a>
+           </div>
+        </li>
+    </ul>
+</div>
+<iframe id="floater_iframe" frameBorder="0" frameMargin="0"></iframe>
+<div id="webGame_floater">
+    <ul>
+        <li><a target="_blank" href="http://game.qidian.com/game/ahxyj/index.html">暗黑西游</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/nslm/index.html">女神联盟</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/qjll/index.html">奇迹来了</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/3gh/index.html">三国魂</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/frxxz/index.html">凡人修仙</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/wwsg/login.aspx">威武三国</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/dntg/index.html">大闹天宫</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/sq/index.html">神曲</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/kzdgl/index.html">空中灌篮</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/gcld/index.html">攻城掠地</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/djj/index.html">大将军</a></li>
+<li><a target="_blank" href="http://game.qidian.com/game/tj/index.html">天界</a></li> 
+    </ul>
+</div>
+<iframe id="webGameFloater_iframe" frameBorder="0" frameMargin="0"></iframe>
+<div id="help_floater">
+    <ul>
+        <li><a href="javascript:void(0);" onclick="open_snda_os(10, '010104', '起点个人书屋问题', { ar: 1, sv: 1 });" class="help001">在线客服</a></li>
+        <li><a href="http://kf.sdo.com" target="_blank" class="help002">客服中心</a></li>
+        <li><a href="http://www.qidian.com/helpcenter/default.aspx" target="_blank" class="help004">用户指南</a></li>
+        <li><a href="http://bbs.qidian.com/list/53" target="_blank" class="help006">改版建议</a></li>
+    </ul>
+</div>
+<iframe id="helpFloater_iframe" frameBorder="0" frameMargin="0"></iframe>
+<div id="search_floater">
+    <form action="http://sosu.qidian.com/searchresult.aspx?internalsiteid=" target="_blank" onsubmit=" var key=$(this).find('input:[name=keyword]'); if(key.val()=='书名/作者/标签') return false;"><ul><li><input type="text" style="color:lightgray" maxlength="30" name="keyword" value="书名/作者/标签" onblur="if(this.value == '') {this.value = this.defaultValue; this.style.color='lightgray'}" onfocus="if(this.value==this.defaultValue) {this.value = '';this.style.color='black'}" /></li><li><input type="image" src="/images/new_head_an9.gif"></li></ul></form>
+</div>
+<iframe id="searchFloater_iframe" frameBorder="0" frameMargin="0"></iframe>
+<div id="deposit_floater">
+    <ul>
+        <li><a href="/account/charge.aspx?type=1&agreement=on" target="_blank">国内银行卡</a></li>
+        <li><a href="/account/charge.aspx?type=3&agreement=on" target="_blank">盛大点卡</a></li>
+        <li><a href="/account/charge.aspx?type=2&agreement=on" target="_blank">国际信用卡</a></li>
+        <li><a href="/account/charge.aspx?type=11&agreement=on" target="_blank">手机充值</a></li>
+        <li><a href="/account/charge.aspx?type=12&agreement=on" target="_blank">新台币充值</a></li>
+        <li><a href="/account/charge.aspx" target="_blank">更多充值</a></li>
+    </ul>
+</div>
+<iframe id="depositFloater_iframe" frameBorder="0" frameMargin="0"></iframe>
+    
+    
+    <div class="me_login">
+        <div class="me_top">
+            <div class="logo"><a href="/">起点社区</a></div>
+            <div class="login_box">
+                <div class="login_iframe">
+                    <div class="sdo_iframe">
+                        <iframe name="iframeLogin" id="iframeLogin" src="http://login.sdo.com/sdo/Login/LoginFrameFC.php?appId=10&amp;areaId=1&amp;target=iframe&amp;style=2&amp;pm=2&amp;returnURL=http%3a%2f%2favd.qidian.com%2fOALoginJump.aspx%3fReturnUrl%3dhttp%253a%252f%252fme.qidian.com%252f%26sitetype%3d1" frameborder="0" scrolling="no" style="width: 435px; height: 340px;" allowtransparency="true" haslayout="-1"></iframe>
+                    </div>
+                </div>
+                <div class="other">
+                    <div class="reg">
+                        <p>还没起点帐号？</p>
+                        <p class="bg_red"><a href="http://www.qidian.com/reg/RegNewStep1.aspx?regtype=3" target="_blank">免费注册，拿迎新礼包！</a></p>
+                    </div>
+                    <div class="way">
+                        <div class="wap">手机访问起点：<u>m.qidian.com</u></div>
+                        <div class="wap">
+                            安装到手机： <u><a href="http://file1.qidian.com/Apk/QDReader.apk?v=93">安卓客户端</a></u>&nbsp;<u><a href="https://itunes.apple.com/cn/app/qi-dian-du-shu-li-xian-ban/id534174796?mt=8" target="_blank">苹果客户端</a></u>
+                        </div>
+                    </div>
+                    <div class="way">
+                        <div class="wap">
+                            <div style="width: 86px; float: left; margin-top: 8px;">手机扫描</div>
+                            <a href="http://file1.qidian.com/Apk/QDReader.apk?v=93" title="安卓客户端下载"><img src="http://c.qidian.com/images/2wm.png" width="125px;" height="125px;" alt="安卓客户端下载"></a>
+                            <a href="http://itunes.apple.com/cn/app/qi-dian-du-shu-li-xian-ban/id534174796?mt=8" title="苹果客户端下载" target="_blank"><img src="http://c.qidian.com/images/iiwm-iphone.gif" width="110px;" height="110px;" alt="苹果客户端下载"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="me_center">
+            <div class="center_title">社区动态</div>
+            <div class="sb-scroll-bar" id="idsb-scroll-bar">
+                <b>热门话题：</b>
+                <div class="scroll-body" id="idscroll-body">
+                    <ul id="ul_hottopic"><li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=年度盛典2013年终盘点">年度盛典2013年终盘点</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=最难忘的主角">最难忘的主角</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=2013起点百部评选">2013起点百部评选</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=一起读书吧">一起读书吧</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=在起点的日子里">在起点的日子里</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=经典语录">经典语录</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=网络原创写作指南">网络原创写作指南</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=起点书评2013年终盛典">起点书评2013年终盛典</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=喜良缘">喜良缘</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=步步惊心">步步惊心</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=我正在追的一本书">我正在追的一本书</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=名家新作 ">名家新作 </a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=凡人修仙传">凡人修仙传</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=网络小说第一刊">网络小说第一刊</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=黄金牧场">黄金牧场</a></li>
+<li><a target="_blank" href="http://me.qidian.com/square/keyword.aspx?keyword=北宋小厨师">北宋小厨师</a></li></ul>
+                </div>
+            </div>
+            <div class="square-body">
+                <div class="sb-left">
+                    <div class="tweet_list">
+                        <h2><img src="/images/square-icon-02.gif" width="13" height="13" alt="" />大家正在说</h2>
+                        
+<div class="tweets" id="div_tweets">
+    <div class="list" id="14022239725904"><a href="/authorIndex.aspx?id=3648560" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/44.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3648560" target="_blank">暗麟紫金</a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span><a href="http://u.qidian.com/juMNnm" title="http://read.qidian.com/BookReader/3095129,51058643.aspx" target="_blank">http://u.qidian.com/juMNnm</a>人界，仙界，神界，修罗界，妖界，魔界，不同的世界，展示华丽的影子。地球有了各种不同的人，有了魔法，而地球也将被毁灭，这该怎么办？《神纹铠甲》让你懂的感情的分离，什么叫恐惧中的力量，让你所谓<p class="t">2分钟前</p></div></div><div class="list" id="14022239725902"><a href="/authorIndex.aspx?id=3783378" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/1.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3783378" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《游行天下》发布了新章节《第二章 奇遇》，这本书已有3人看过！<a href="http://u.qidian.com/IVNbuu" title="http://read.qidian.com/BookReader/3101214,51262847.aspx" target="_blank">http://u.qidian.com/IVNbuu</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725900"><a href="/friendIndex.aspx?id=162332945" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/18.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=162332945" target="_blank">吾名小忍</a></span><img alt="神马" title="神马" src="http://me.qidian.com/images/face/48.png" width="24" height="24"/><p class="t">2分钟前</p></div></div><div class="list" id="14022239725898"><a href="/authorIndex.aspx?id=1311219" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/7.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=1311219" target="_blank">soso晕</a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>阻挡犯规<p class="t">2分钟前</p></div></div><div class="list" id="14022239725897"><a href="/authorIndex.aspx?id=3775408" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/102.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3775408" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《子夜空吟》发布了新章节《第四十五章 那一双赤红色的眼眸》，这本书已有97人看过！<a href="http://u.qidian.com/FZfqym" title="http://read.qidian.com/BookReader/3096402,51262846.aspx" target="_blank">http://u.qidian.com/FZfqym</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725892"><a href="/friendIndex.aspx?id=102845503" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/13.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=102845503" target="_blank">一日千人</a></span><a target="_blank" href="/square/keyword.aspx?keyword=%e9%ad%94%e5%a4%a9%e8%ae%b0">#魔天记#</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725890"><a href="/friendIndex.aspx?id=150076950" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/1.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=150076950" target="_blank">读者新晖</a></span>飘着毛毛雨<p class="t">2分钟前</p></div></div><div class="list" id="14022239725889"><a href="/friendIndex.aspx?id=175863929" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/1.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=175863929" target="_blank">胡萝卜の味道</a></span>=-=<p class="t">2分钟前</p></div></div><div class="list" id="14022239725888"><a href="/authorIndex.aspx?id=2432815" target="_blank"><img src="http://file2.qidian.com/face/7/29/72920550x50.png" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=2432815" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《别样小凤》发布了新章节《第一百八十四章  师父的神兽》，这本书已有25284人看过！<a href="http://u.qidian.com/En6rYf" title="http://vipreader.qdmm.com/BookReader/vip,2983507,51262844.aspx" target="_blank">http://u.qidian.com/En6rYf</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725887"><a href="/friendIndex.aspx?id=7112318" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/27.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=7112318" target="_blank">无德行天下</a></span>21323321<p class="t">2分钟前</p></div></div><div class="list" id="14022239725886"><a href="/authorIndex.aspx?id=3705304" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/1.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3705304" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《诛杀叛将》发布了新章节《第0017章 借头》，这本书已有38人看过！<a href="http://u.qidian.com/INnqIf" title="http://read.qidian.com/BookReader/3095900,51262842.aspx" target="_blank">http://u.qidian.com/INnqIf</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725885"><a href="/authorIndex.aspx?id=3234055" target="_blank"><img src="http://file1.qidian.com/face/7/20/72002650x50.png" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3234055" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《除妖之素心咒》发布了新章节《素心》，这本书已有2941人看过！<a href="http://u.qidian.com/qiui2i" title="http://www.qdmm.com/BookReader/2656048,51262840.aspx" target="_blank">http://u.qidian.com/qiui2i</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725883"><a href="/authorIndex.aspx?id=3764412" target="_blank"><img src="http://file1.qidian.com/face/7/77/77791250x50.png" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3764412" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《超牛特种兵》发布了新章节《第八十九章 军事训练》，这本书已有305人看过！<a href="http://u.qidian.com/22INNb" title="http://read.qidian.com/BookReader/3090486,51262839.aspx" target="_blank">http://u.qidian.com/22INNb</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725881"><a href="/authorIndex.aspx?id=3784021" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/36.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3784021" target="_blank">公子本无缘</a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>最近比较烦比较烦比较烦新书<a target="_blank" href="/square/keyword.aspx?keyword=%e7%bb%9d%e6%96%97%e4%b9%8b%e7%be%8e%e7%94%b7%e8%af%b7%e6%8e%a5%e6%8b%9b">#绝斗之美男请接招#</a>，关注的还是那么少，难道刚开始写书都是这个样子吗？<img alt="泪奔" title="泪奔" src="http://me.qidian.com/images/face/12.png" width="24" height="24"/><p class="t">2分钟前</p></div></div><div class="list" id="14022239725879"><a href="/friendIndex.aspx?id=4755950" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/4.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=4755950" target="_blank">blankdragon</a></span>绝代双骄 哦嘿呀 哦嘿呀哦<p class="t">2分钟前</p></div></div><div class="list" id="14022239725877"><a href="/friendIndex.aspx?id=136074085" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/99.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=136074085" target="_blank">都戒了</a></span>们么么么么<p class="t">2分钟前</p></div></div><div class="list" id="14022239725876"><a href="/friendIndex.aspx?id=119424509" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/18.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/friendIndex.aspx?id=119424509" target="_blank">逍遥强神</a></span><img alt="大兵" title="大兵" src="http://me.qidian.com/images/face/8.png" width="24" height="24"/><p class="t">2分钟前</p></div></div><div class="list" id="14022239725874"><a href="/authorIndex.aspx?id=3642404" target="_blank"><img src="http://me.qidian.com/Images/UserImages/50x50/1.jpg" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3642404" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《阿丽莎》发布了新章节《第三十五章.热情好客的船长（2）》，这本书已有879人看过！<a href="http://u.qidian.com/niIfEr" title="http://read.qidian.com/BookReader/3029573,51262837.aspx" target="_blank">http://u.qidian.com/niIfEr</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725873"><a href="/authorIndex.aspx?id=3307701" target="_blank"><img src="http://file2.qidian.com/face/7/81/78105550x50.png" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3307701" target="_blank"></a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>我的作品《凤归九霄》发布了新章节《第三百零七章 雷霆与弱水（十）》，这本书已有37405人看过！<a href="http://u.qidian.com/EFZJVj" title="http://vipreader.qdmm.com/BookReader/vip,2727606,51262836.aspx" target="_blank">http://u.qidian.com/EFZJVj</a><p class="t">2分钟前</p></div></div><div class="list" id="14022239725872"><a href="/authorIndex.aspx?id=3122502" target="_blank"><img src="http://file1.qidian.com/face/6/89/68948650x50.png" width="50" height="50" alt="" class="user-photo"/></a><div class="tiw"><span class="us"><a href="/authorIndex.aspx?id=3122502" target="_blank">飞花残剑</a><img src="/images/icon_v.gif" width="14" height="14" alt="起点作家" title="起点作家"/></span>1.丈夫还没回来，于是妈妈让儿子给他爸打电话… 儿子：爹地，妈咪问你什么时候回来？ 爹地：让你妈和我说。 儿子看着妈：爹地说你自己和他说！ 妈咪：你替我说。 儿子瞬间脸色一变，咆哮道：都11点了你还不死回来？?<p class="t">2分钟前</p></div></div>
+    <div class="shadow"></div> 
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            function slide()
+            {
+                $.get(
+                        "/Ajax/TwitterSquare.ashx",
+                        {
+                            ajaxMethod: "getLastedTwitter",
+                            type: 0,
+                            random: Math.random()
+                        },
+                        function(data)
+                        {
+                            if (data.result)
+                            {
+                                var firstJq = $("#div_tweets div.list:first");
+                                if (firstJq.attr("id") != data.twitterId)
+                                {
+                                    $(data.twitterInfoHtml).insertBefore(firstJq);
+                                    var moveJq = $("#div_tweets div.list:first");
+                                    moveJq.css({ marginTop: -moveJq.outerHeight(), opacity: 0 })
+                                    moveJq.animate({ marginTop: 0 }, 1500).fadeTo(500, 1);
+                                    $("#div_tweets div.list:last").remove();
+                                }
+                            }
+                        },
+                        "json"
+                     );
+            }
+            var tt = window.setInterval(slide, 5000);
+            $("#div_tweets").mouseover(function()
+            {
+                window.clearInterval(tt);
+            });
+            $("#div_tweets").mouseout(function()
+            {
+                tt = window.setInterval(slide, 5000);
+            });
+        });
+    </script>
+</div>
+
+                    </div>
+                    <div class="people-list">
+                        <h2><img src="/images/square-icon-03.gif" width="13" height="13" alt="" />他们在这里</h2>
+                        <ul><li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=33228"><img alt="我吃西红柿" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/10.jpg" />&nbsp;
+<p>我吃西红柿</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=7934"><img alt="血红" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/82.jpg" />
+<p>血红</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=3053096"><img alt="黄易" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/102.jpg" />
+<p>黄易</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=91782"><img alt="忘语" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/102.jpg" />
+<p>忘语</p>
+</a></li>
+<li><a target="_blank" href=" http://me.qidian.com/authorIndex.aspx?id=69177"><img alt="月关" width="50" height="50" src="http://file1.qidian.com/face/6/42/642622100x100.png" />
+<p>月关</p>
+</a></li>
+<li><a target="_blank" href=" http://me.qidian.com/authorIndex.aspx?id=4921"><img alt="唐家三少" width="50" height="50" src="http://file2.qidian.com/face/4/67/467977100x100.png" />
+<p>唐家三少</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=1130915"><img alt="叶天南" width="50" height="50" src="http://file2.qidian.com/face/4/75/475927100x100.png" />
+<p>叶天南</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/12445"><img alt="辰东" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/102.jpg" />
+<p>辰东</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/5607"><img alt="傲无常" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/102.jpg" />
+<p>傲无常</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/1104527"><img alt="月鼠" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/18.jpg" />
+<p>月鼠</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=2581995"><img alt="大烟缸" width="50" height="50" src="http://file1.qidian.com/face/4/12/412340100x100.png" />
+<p>大烟缸</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/2072891"><img alt="天下飘火" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/18.jpg" />
+<p>天下飘火</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/13342"><img alt="雷云风暴" width="50" height="50" src="http://file1.qidian.com/face/5/99/599198100x100.png" />
+<p>雷云风暴</p>
+</a></li>
+<li><a target="_blank" href=" http://me.qidian.com/authorIndex.aspx?id=1682318"><img alt="乘风御剑" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/36.jpg" />
+<p>乘风御剑</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/2342811"><img alt="鹅是老五" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/102.jpg" />
+<p>鹅是老五</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/2023635"><img alt="打眼" width="50" height="50" src="http://file2.qidian.com/face/4/6/406975100x100.png" />
+<p>打眼</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/w/15395"><img alt="蝴蝶蓝" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/18.jpg" />
+<p>蝴蝶蓝</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=1713"><img alt="石章鱼" width="50" height="50" src="http://file2.qidian.com/face/5/30/530801100x100.png" />
+<p>石章鱼</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=2955916"><img alt="孑与2" width="50" height="50" src="http://file2.qidian.com/face/6/2/602627100x100.png" />&nbsp;
+<p>孑与2</p>
+</a></li>
+<li><a target="_blank" href="http://me.qidian.com/authorIndex.aspx?id=2678474"><img alt="爱潜水的乌贼" width="50" height="50" src="http://me.qidian.com/Images/UserImages/100x100/1.jpg" />
+<p>爱潜水的乌贼</p>
+</a></li></ul>
+                    </div>
+                </div>
+                <div class="sb-right">
+                    
+<div class="square-side">
+	<h4><span>粉丝数</span>作者人气<em>TOP5</em></h4>
+	<ul>
+		<li><span>330577</span><a href="/authorIndex.aspx?id=33228" target="_blank">我吃西红柿</a></li><li><span>316025</span><a href="/authorIndex.aspx?id=4921" target="_blank">唐家三少</a></li><li><span>315583</span><a href="/authorIndex.aspx?id=1019021" target="_blank">天蚕土豆</a></li><li><span>194337</span><a href="/authorIndex.aspx?id=7769" target="_blank">跳舞</a></li><li><span>186959</span><a href="/authorIndex.aspx?id=12445" target="_blank">辰东</a></li>
+	</ul>
+</div>
+                    
+<div class="square-side">
+	<h4><span>粉丝数</span>读者人气<em>TOP5</em></h4>
+	<ul>
+		<li><span>32990</span><a href="/friendIndex.aspx?id=148932839" target="_blank">丨灬Soul丶落幕</a></li><li><span>24932</span><a href="/friendIndex.aspx?id=112556162" target="_blank">醉酒的神祇</a></li><li><span>22852</span><a href="/friendIndex.aspx?id=15269731" target="_blank">小妖爱吃馅饼</a></li><li><span>19619</span><a href="/friendIndex.aspx?id=133256" target="_blank">女人的老公</a></li><li><span>17242</span><a href="/friendIndex.aspx?id=2284435" target="_blank">步乩</a></li>
+	</ul>
+</div>
+                    
+<div class="square-side">
+	<h4><span>广播数</span>广播达人<em>TOP5</em></h4>
+	<ul>
+		<li><span>917210</span><a href="/friendIndex.aspx?id=130082247" target="_blank">♀太阳</a></li><li><span>239652</span><a href="/friendIndex.aspx?id=113667774" target="_blank">我为天下谁人</a></li><li><span>182359</span><a href="/friendIndex.aspx?id=126950029" target="_blank">欧阳星空曌</a></li><li><span>159691</span><a href="/friendIndex.aspx?id=5854364" target="_blank">林丰毅</a></li><li><span>142934</span><a href="/friendIndex.aspx?id=19297899" target="_blank">♂賤客的江湖♂</a></li>
+	</ul>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+    <div class="line">
+        <a href="http://www.qidian.com/aboutus/aboutus.aspx" target="_blank">关于我们</a>|<a href="http://www.qidian.com/helpcenter/default.aspx" target="_blank">用户指南</a>|<a href="http://www.qidian.com/aboutus/ads/advertise.html" class="light" target="_blank">广告服务</a>|<a href="http://www.qidian.com/aboutus/ads/copyright.html" target="_blank">版权行销</a>|<a href="http://www.qidian.com/HelpCenter/default.aspx?type=0&categoryid=24&parentid=21" class="light" target="_blank">VIP会员申请</a>|<a href="http://www.qidian.com/HelpCenter/default.aspx?type=0&categoryid=54&parentid=53" class="light" target="_blank">作者投稿</a>|<a href="/account/charge.aspx" class="light">支付中心</a>|<a href="http://open.qidian.com/" target="_blank" class="light">开放平台</a>|<a href="http://www.qidian.com/help/about_link.aspx" target="_blank">友情链接</a>|<a href="http://kf.sdo.com/kf/qidian.aspx" target="_blank">客服中心</a>|<a href="http://bbs.qidian.com/list/53" target="_blank">提交建议</a>|<a href="http://www.qidian.com/aboutus/retain.aspx" target="_blank">诚聘英才</a>|<a href="http://www.qidian.com/aboutus/contactus.aspx" target="_blank">联系我们</a>
+    </div>
+    <div class="declare">
+        <p>Copyright (C) 2002-2014 www.qidian.com All Rights Reserved 版权所有 上海玄霆娱乐信息科技有限公司</p>
+        <p>上海玄霆娱乐信息科技有限公司 增值电信业务经营许可证沪B2-20080046 文网文[2008]149号 新出网证(沪)字010 沪ICP备08017520号</p>
+        <p style="color: blue">请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！</p>
+        <p>本站所收录作品、社区话题、书库评论及本站所做之广告均属其个人行为，与本站立场无关</p>
+    </div>
+</div>
+    <script type="text/javascript" src="http://o.if.qidian.com/js/o.js"></script>
+    <script type="text/javascript" src="http://ipic.staticsdo.com/external/install_beacon.js"></script>
+    <script type="text/javascript" src="/js/googleStatic.js"></script>
+    <!--IP:16.70-->
+</body>
+</html>

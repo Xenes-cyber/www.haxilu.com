@@ -1,0 +1,205 @@
+
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+ <meta id="ctl00_metaKeywords" name="keywords" /><meta id="ctl00_metaDescription" name="description" /><meta name="robots" content="all" /><meta name="googlebot" content="all" /><meta name="baiduspider" content="all" /><meta name="copyright" content="本页版权 www.qidian.com 起点中文网所有。All Rights Reserved" /><title>
+	小说原创门户-起点中文网_玄幻小说,武侠小说,言情小说,网游小说,等近二十万小说应有尽有
+</title><link id="ctl00_MainStyle" rel="stylesheet" type="text/css" href="/style/contribute.css" /><link id="ctl00_GlobalStyle" href="/Style/global.css" rel="stylesheet" type="text/css" />
+ <script src="/Javascript/main.htm" type="text/javascript"></script>
+ <script src="/Javascript/simAjax.htm" type="text/javascript"></script> 
+ <script src="/JavaScript/CmfuAjax.htm?t=081031" type="text/javascript"></script>
+</head>
+<body>
+ <form name="aspnetForm" method="post" action="authorloginbk.aspx" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNjQyMTA5NDk3D2QWAmYPZBYEAgEPZBYCAgcPFgIeBGhyZWYFFS9zdHlsZS9jb250cmlidXRlLmNzc2QCAw9kFgICCg9kFgICAw8PFgIeB1Zpc2libGVoZGRkP6VtEVNlwrDikBjb08f01MYv2Jo=" />
+
+
+<script type="text/javascript">
+<!--
+var __appId=1;var __siteDomain='www.qidian.com';// -->
+</script>
+<script src='/javascript/err.js?t=080813' type='text/javascript'></script>
+
+ <script type="text/javascript">
+ 
+ function closeTipsWin()
+ {
+ document.getElementById("TipsWin").style.display="none";
+ } 
+ 
+ function checkInput()
+ {
+ var txtUserId = document.getElementById("txtUserName");
+ var txtPassword = document.getElementById("txtPwd"); 
+ 
+ if(txtUserId!=null )
+ {
+ if(txtUserId.value==null || txtUserId.value.length == 0)
+ {
+ alert("请输入盛大通行证");
+ txtUserId.focus(); 
+ return false; 
+ }
+ 
+ if(txtUserId.value.length>30)
+ {
+ alert("您输入的盛大通行证太长");
+ return false; 
+ }
+ }
+ 
+ if(txtPassword!=null )
+ {
+ if(txtPassword.value==null || txtPassword.value.length == 0)
+ {
+ alert("请输入密码");
+ txtPassword.focus(); 
+ return false; 
+ }
+ 
+ if(txtPassword.value.length>30)
+ {
+ alert("您输入的密码太长");
+ return false; 
+ }
+ }
+ return true; 
+ }
+ 
+ function Login()
+ {
+ 
+ if(checkInput())
+ { 
+ MyAjax.LoginUserWithInfo($('txtUserName').value,$('txtPwd').value,$('txtToken').value,
+ '123456',$('chbSaveCookie').checked,ShowLoginCallBack); 
+ } 
+ }
+ 
+ function Logout()
+ {
+ MyAjax.SignOut(ShowLogoutCallBack);
+ } 
+ 
+ function ShowLogoutCallBack()
+ {
+ $('divRight').style.display = '';
+ $('divMidd').style.display = 'none'; 
+ window.location.reload();
+ }
+ 
+ function __CheckLogin()
+ {
+ if(checkLoginByCookie())
+ {
+ MyAjax.CheckLoginWithInfo(ShowAutoLoginCallBask);
+ }else
+ {
+ var fromFriendId="";
+ if (fromFriendId!=null & fromFriendId>0)
+ {
+ $('btnMasterRegister').onclick=function MasterRegClick(){window.parent.location.href='http://www.qidian.com/' + '/User/RegisterUser.aspx?fromfriend='+fromFriendId;}
+ } 
+ $('divRight').style.display = '';
+ $('divMidd').style.display = 'none';
+ } 
+ }
+ 
+ function ShowAutoLoginCallBask(result){ FullLoginInfo(result);}
+ function ShowLoginCallBack(result){
+ if(result){
+ FullLoginInfo(result);
+ if(result.value.Code != 0)
+ { alert(result.value.LoginMessage);}
+ else
+ {
+ //6周年活动,080601之前注册0607-0609三天内首次登陆会弹出提示
+ if (typeof isDuring6Year && typeof sixyearWarning)
+ {
+ var now=new Date();
+ var llvalue=GetCookie("ll");
+ var regtvalue=GetCookie("regt");
+
+ if (regtvalue!=null && regtvalue =="True")
+ {
+ if (llvalue!=null && llvalue!="")
+ {
+ var arr=new Array();
+ arr=GetCookie("ll").substring(0,10).split("-"); 
+ var lastLogin=new Date(arr[0],arr[1],arr[2]);
+ 
+ if (lastLogin.getDate()==now.getDate() && lastLogin.getMonth()==6 && lastLogin.getYear()==now.getYear());
+ else alert(sixyearWarning);
+ }
+ }
+ }
+ 
+ //VIP完本赠送计划
+ if (typeof isDuringVipDeliver2)
+ {
+ var now=new Date();
+ var llvalue=GetCookie("ll");
+ var regtvalue=GetCookie("vdk");
+
+ if (regtvalue!=null && regtvalue =="True")
+ {
+// if (llvalue!=null && llvalue!="")
+// {
+// var arr=new Array();
+// arr=GetCookie("ll").substring(0,10).split("-"); 
+// var lastLogin=new Date(arr[0],arr[1],arr[2]);
+// 
+// if (lastLogin.getDate()==now.getDate() && lastLogin.getMonth()==7 && lastLogin.getYear()==now.getYear());
+// else {
+ window.open("/user/selectdeliverbook.aspx","deliverbook");
+// }
+// }
+ }
+ }
+
+ window.location.reload();
+ }
+ } 
+ }
+ 
+ function FullLoginInfo(result)
+ {
+ var retInfo = result.value;
+ var messageCount = 0;
+ var NickName = "";
+ var userId = "";
+ var vip = 0;
+ if(retInfo.Code == 0)
+ {
+ messageCount = retInfo.MessageCount;
+ NickName = retInfo.NickName;
+ userId = retInfo.userId;
+ vip=retInfo.VIP;
+ 
+ $('divRight').style.display = 'none';
+ $('divMidd').style.display = '';
+ if(navigator.appName.indexOf("Explorer") > -1)
+ { 
+ $('spanNewMsgCount').innerText = messageCount;
+ $('spanUserName').innerText = NickName; 
+ }
+ else
+ { 
+ $('spanNewMsgCount').textContent = messageCount;
+ $('spanUserName').textContent = NickName; 
+ }
+ //spark
+ if(messageCount != 0)
+ {
+ setInterval("Spark()", 500);
+ }
+ $('linkMySpace').href='http://sq.qidian.com/'+"User/"+userId+".aspx";
+ if(vip == '1' || vip == '2')
+ {
+ $('divVIP').style.display = 'inline';
+ }
+ //检查是否CAS登录
+ var CAS_DEFAULTUSERKEY;
+ CAS_DEFAULTUSERKEY = GetCookie("CAS_DEFAULTUSERKEY");
+ if (CAS_DEFAULTUSERKEY != null && CAS_DEFAULTUSERKEY != ""){
+ $("btnGlobalExit"

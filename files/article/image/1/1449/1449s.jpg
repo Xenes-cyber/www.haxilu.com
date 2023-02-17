@@ -1,0 +1,833 @@
+
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+ <meta id="ctl00_metaKeywords" name="keywords" /><meta id="ctl00_metaDescription" name="description" /><meta name="robots" content="all" /><meta name="googlebot" content="all" /><meta name="baiduspider" content="all" /><meta name="copyright" content="本页版权 www.qidian.com 起点中文网所有。All Rights Reserved" /><title>
+	小说原创门户-起点中文网_玄幻小说,武侠小说,言情小说,网游小说,等近二十万小说应有尽有
+</title><link id="ctl00_MainStyle" rel="stylesheet" type="text/css" href="/style/contribute.css" /><link id="ctl00_GlobalStyle" href="/Style/global.css" rel="stylesheet" type="text/css" />
+ <script src="/Javascript/main.htm" type="text/javascript"></script>
+ <script src="/Javascript/simAjax.htm" type="text/javascript"></script> 
+ <script src="/JavaScript/CmfuAjax.htm?t=081031" type="text/javascript"></script>
+</head>
+<body>
+ <form name="aspnetForm" method="post" action="authorloginbk.aspx" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNjQyMTA5NDk3D2QWAmYPZBYEAgEPZBYCAgcPFgIeBGhyZWYFFS9zdHlsZS9jb250cmlidXRlLmNzc2QCAw9kFgICCg9kFgICAw8PFgIeB1Zpc2libGVoZGRkP6VtEVNlwrDikBjb08f01MYv2Jo=" />
+
+
+<script type="text/javascript">
+<!--
+var __appId=1;var __siteDomain='www.qidian.com';// -->
+</script>
+<script src='/javascript/err.js?t=080813' type='text/javascript'></script>
+
+ <script type="text/javascript">
+ 
+ function closeTipsWin()
+ {
+ document.getElementById("TipsWin").style.display="none";
+ } 
+ 
+ function checkInput()
+ {
+ var txtUserId = document.getElementById("txtUserName");
+ var txtPassword = document.getElementById("txtPwd"); 
+ 
+ if(txtUserId!=null )
+ {
+ if(txtUserId.value==null || txtUserId.value.length == 0)
+ {
+ alert("请输入盛大通行证");
+ txtUserId.focus(); 
+ return false; 
+ }
+ 
+ if(txtUserId.value.length>30)
+ {
+ alert("您输入的盛大通行证太长");
+ return false; 
+ }
+ }
+ 
+ if(txtPassword!=null )
+ {
+ if(txtPassword.value==null || txtPassword.value.length == 0)
+ {
+ alert("请输入密码");
+ txtPassword.focus(); 
+ return false; 
+ }
+ 
+ if(txtPassword.value.length>30)
+ {
+ alert("您输入的密码太长");
+ return false; 
+ }
+ }
+ return true; 
+ }
+ 
+ function Login()
+ {
+ 
+ if(checkInput())
+ { 
+ MyAjax.LoginUserWithInfo($('txtUserName').value,$('txtPwd').value,$('txtToken').value,
+ '123456',$('chbSaveCookie').checked,ShowLoginCallBack); 
+ } 
+ }
+ 
+ function Logout()
+ {
+ MyAjax.SignOut(ShowLogoutCallBack);
+ } 
+ 
+ function ShowLogoutCallBack()
+ {
+ $('divRight').style.display = '';
+ $('divMidd').style.display = 'none'; 
+ window.location.reload();
+ }
+ 
+ function __CheckLogin()
+ {
+ if(checkLoginByCookie())
+ {
+ MyAjax.CheckLoginWithInfo(ShowAutoLoginCallBask);
+ }else
+ {
+ var fromFriendId="";
+ if (fromFriendId!=null & fromFriendId>0)
+ {
+ $('btnMasterRegister').onclick=function MasterRegClick(){window.parent.location.href='http://www.qidian.com/' + '/User/RegisterUser.aspx?fromfriend='+fromFriendId;}
+ } 
+ $('divRight').style.display = '';
+ $('divMidd').style.display = 'none';
+ } 
+ }
+ 
+ function ShowAutoLoginCallBask(result){ FullLoginInfo(result);}
+ function ShowLoginCallBack(result){
+ if(result){
+ FullLoginInfo(result);
+ if(result.value.Code != 0)
+ { alert(result.value.LoginMessage);}
+ else
+ {
+ //6周年活动,080601之前注册0607-0609三天内首次登陆会弹出提示
+ if (typeof isDuring6Year && typeof sixyearWarning)
+ {
+ var now=new Date();
+ var llvalue=GetCookie("ll");
+ var regtvalue=GetCookie("regt");
+
+ if (regtvalue!=null && regtvalue =="True")
+ {
+ if (llvalue!=null && llvalue!="")
+ {
+ var arr=new Array();
+ arr=GetCookie("ll").substring(0,10).split("-"); 
+ var lastLogin=new Date(arr[0],arr[1],arr[2]);
+ 
+ if (lastLogin.getDate()==now.getDate() && lastLogin.getMonth()==6 && lastLogin.getYear()==now.getYear());
+ else alert(sixyearWarning);
+ }
+ }
+ }
+ 
+ //VIP完本赠送计划
+ if (typeof isDuringVipDeliver2)
+ {
+ var now=new Date();
+ var llvalue=GetCookie("ll");
+ var regtvalue=GetCookie("vdk");
+
+ if (regtvalue!=null && regtvalue =="True")
+ {
+// if (llvalue!=null && llvalue!="")
+// {
+// var arr=new Array();
+// arr=GetCookie("ll").substring(0,10).split("-"); 
+// var lastLogin=new Date(arr[0],arr[1],arr[2]);
+// 
+// if (lastLogin.getDate()==now.getDate() && lastLogin.getMonth()==7 && lastLogin.getYear()==now.getYear());
+// else {
+ window.open("/user/selectdeliverbook.aspx","deliverbook");
+// }
+// }
+ }
+ }
+
+ window.location.reload();
+ }
+ } 
+ }
+ 
+ function FullLoginInfo(result)
+ {
+ var retInfo = result.value;
+ var messageCount = 0;
+ var NickName = "";
+ var userId = "";
+ var vip = 0;
+ if(retInfo.Code == 0)
+ {
+ messageCount = retInfo.MessageCount;
+ NickName = retInfo.NickName;
+ userId = retInfo.userId;
+ vip=retInfo.VIP;
+ 
+ $('divRight').style.display = 'none';
+ $('divMidd').style.display = '';
+ if(navigator.appName.indexOf("Explorer") > -1)
+ { 
+ $('spanNewMsgCount').innerText = messageCount;
+ $('spanUserName').innerText = NickName; 
+ }
+ else
+ { 
+ $('spanNewMsgCount').textContent = messageCount;
+ $('spanUserName').textContent = NickName; 
+ }
+ //spark
+ if(messageCount != 0)
+ {
+ setInterval("Spark()", 500);
+ }
+ $('linkMySpace').href='http://sq.qidian.com/'+"User/"+userId+".aspx";
+ if(vip == '1' || vip == '2')
+ {
+ $('divVIP').style.display = 'inline';
+ }
+ //检查是否CAS登录
+ var CAS_DEFAULTUSERKEY;
+ CAS_DEFAULTUSERKEY = GetCookie("CAS_DEFAULTUSERKEY");
+ if (CAS_DEFAULTUSERKEY != null && CAS_DEFAULTUSERKEY != ""){
+ $("btnGlobalExit").style.display = "none";
+ }
+ //3个月未登录提示
+ if( typeof retInfo.IsThreeMonth!="undefined" && retInfo.IsThreeMonth )
+ {
+ var IsTips = GetCookie("IsTips");
+ if(IsTips!="1")
+ { 
+ var divTop=document.body.clientHeight-330;
+ var divLeft = document.body.clientWidth-355;
+ var frame = "<div id='TipsWin' style='z-index: 999; position: absolute; filter: alpha(opacity=93); left: "+divLeft+"px; top: "+divTop+"px'><iframe id='TipsFrame' frameborder=no height='188' width='355' src='http://www.qidian.com/BookReader/Tips/TipsUnLogin3Mon.aspx'></iframe></div>";
+ $("divMidd").innerHTML+= frame;
+ 
+ SetCookie("IsTips","1"); //记录弹出框是否已经弹出过
+ }
+ }
+ }
+ else if (retInfo.Code == -3)//需要验证安全卡号
+ {
+ var ecardUrl=retInfo.ecardParam;
+ document.location.href=ecardUrl;
+ }
+ else
+ {
+ $('divRight').style.display = '';
+ $('divMidd').style.display = 'none';
+ } 
+ }
+
+
+
+ var i = 0;
+ function Spark()
+ {
+	 var obj = $('spanNewMsgCount');
+	 var color = "";
+	 switch(i)
+	 {
+		 case 0:color = "red";break;
+		 case 1:color = "blue";break;
+		 //case 2:color = "green";break;
+	 }
+	 i++;
+	 obj.style.color = color;
+	 if(i >= 2)
+	 {
+	 i = 0;
+	 }
+ } 
+ </script>
+
+ <script type="text/javascript">
+ function TabSearch()
+ {
+ if(event.keyCode == 13)
+ { 
+ go ();
+ } 
+ }
+ function opwin(keywords,type){ window.open("http://sosu.qidian.com/search.aspx?k="+escape(keywords)+"&t="+type); }
+ function go(){
+ var key = $("txtwords").value;
+			 key = key.replace(/</g, "");
+			 key = key.replace(/>/g, ""); 
+			 var index = $("searchtype").selectedIndex; 
+			 var type= $("searchtype").options[index].value; 
+ if(key == null || key.length==0)
+ {
+ alert("请输入搜索关键字"); 
+ return false;
+ }
+			 else if(type.indexOf('ft') != -1 && key.length < 2) 
+			 {
+			 alert("请输入2个或以上字符");
+			 return;
+			 } 
+ opwin(key,type);
+ }
+ 
+ function AlertUser()
+ {
+ 
+		if ($("chbSaveCookie").checked == true)
+ 	if (!confirm("帐号保存一月，这台电脑所有用户都能使用您的帐号，请慎重考虑。\n\n并且，你不能再进行登录加分、宠物加爱心、藏书提示等功能。\n\n但，您可以通过每天退出登录一次来恢复使用上述功能。"))
+ 	{$("chbSaveCookie").checked=false;}
+ 	else
+ 	{
+ 		Login();
+ 	}
+ }
+ 
+ function ClickLogin()
+ {
+ if(event.keyCode == 13)
+ {
+try
+ {
+Login();
+//$("btnLogin").click();
+}catch(e){}
+ //$("btnLogin").focus();
+ event.keyCode = 13;
+ }
+ }
+ </script>
+
+ <!--头-->
+ <div id="loading"> <img src="/Images/indicator_medium.gif" alt="页面加载中"/> </div>
+ <iframe id="" height=30 src="http://sndasdopassport.sdo.com/sdodownload/passport/SNDAHomepage/SNDANewsBar.aspx" scrolling="no" frameborder="0" width="990px"></iframe> 
+ <div id="header" style="width: 990px;text-align:center;margin-left:auto; margin-right:auto; ">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td align="center">
+ <table width="100%" height="30px" border="0" align="center" cellpadding="0" cellspacing="0" style="background-image:url(/images/bg_head01.gif);">
+ <tr>
+ <td align="center" class="headfont12">
+ <div id="divLeft" style="float: left; left: 0; width: 350px; height: 30px;padding-left:5px;">
+ <table cellpadding="0" cellspacing="0" width="100%" height="30px" border="0" style="font-size:12px;">
+ <tr>
+ <td align="left" width="35%" style="font-size:12px">
+ <a href="http://www.qidian.com" class="headred" style="color:#004d00">简体</a>·<a href="http://big5.qidian.com/"
+ target="_blank" class="headred" style="color:#004d00">繁体</a>┊<a href="http://mm.qidian.com/MMWeb/Default.aspx" target="_blank"
+ class="headred" style="color:#004d00">女生频道</a>·<a
+ href="http://www.qidian.com/game/dgjq/index.htm" target="_blank" class="headred" style="color:red">帝国远征</a>·<a
+ href="http://www.qidian.com/game/yxzm/index.htm" target="_blank" class="headred" style="color:#004d00">英雄</a>·<a
+- href="http://www.qidian.com/game/zh/index.asp" target="_blank" class="headred" style="color:#004d00">纵横</a>·<a href="#" class="headred" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.qidian.com');" style="color:#004d00">设为首页</a></td>
+ </tr>
+ </table>
+ </div>
+ </td>
+ <td align="right">
+ <div id="divMidd" style="float: right; left: 350px; width: 630px; display: none;padding-right:5px;">
+ <table cellpadding="0" cellspacing="0" width="100%" border="0" style="font-size:12px">
+ <tr>
+ <td width="65%" align="right" class="wz01">
+ <span id="spanUserName"></span><a href="http://www.qidian.com/User/MyMessage.aspx" target="_blank" class="globalgreen">
+ (新消息：<span id="spanNewMsgCount"></span>)</a> ┊ <a class="globalgreen" target="_blank"
+ href="http://www.qidian.com/User/Index.aspx">个人书屋</a> ┊ <a id="A1" target="_blank" class="globalgreen"
+ href="http://www.qidian.com/User/MyBookCase.aspx">我的书架</a> ┊
+ <div id="divVIP" style="display: none">
+ <a href="http://www.qidian.com/User/MyBookCase.aspx?vip=true" target="_blank" class="globalgreen">VIP书架</a>
+ ┊
+ </div>
+ <a href="http://sq.qidian.com/User/" class="globalgreen" target="_blank" id="linkMySpace">
+ 我的空间</a> ┊
+ <input type="button" class="globalgreen" value="退出" onClick="Logout()" id="btnGlobalExit" />
+ </td>
+ </tr>
+ </table>
+ </div>
+ 
+ </td>
+ <td align="right">
+ <div id="divRight" style="float: right; left: 350px; width: 630px; display: none;
+ text-align: right">
+ <table cellpadding="0" cellspacing="0" height="30px" width="100%" border="0" style="font-size:12px">
+ <tr>
+ <td width="100%" align="right">
+ 盛大通行证
+ <input name="txtUserName" type="text" id="txtUserName" class="headinpout" onKeyPress="ClickLogin();" style="width: 60px;" />
+ 密码
+ <input name="txtPwd" type="password" id="txtPwd" class="headinpout" onKeyPress="ClickLogin();" style="width: 60px;" />
+ 密宝
+ <input name="txtToken" type="text" id="txtToken" class="headinpout" style="width: 55px;color:Gray" onFocus="this.value='';" value="无则不填" />
+ <input id="chbSaveCookie" type="checkbox" onClick="AlertUser();" name="chbSaveCookie" /><label
+ for="chbSaveCookie">保持一月</label>
+ <input type="button" id="btnLogin" class="stbtn" onClick="Login()" style="color: Blue;"
+ value="登录" />
+ ┊
+ <input type="button" class="stbtn" id="btnMasterRegister" value="注册" onClick="javascript:window.parent.location.href='http://www.qidian.com/User/RegisterUser.aspx';"
+ style="color: Red" />
+ </td>
+ </tr>
+ </table>
+ </div>
+ </td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ <table width="100%" height="73" border="0" align="center" cellpadding="0" cellspacing="0">
+ <tr>
+ <td width="200" align="center">
+ <a href="http://www.qidian.com/Default.aspx">
+ <img src="/images/logo.gif" border="0" width="155" height="55" alt="小说原创门户 起点中文网 LOGO"></a></td>
+ <td align="center" style="width: 600px">
+ <div width='468' height = '60' style='text-align:center'>  <a href='/AD/ShowAdv.aspx?adid=794' target = '_blank' ><img src='http://op.cmfu.com/ADPictures/20080630_16.gif' width='468' height='60' alt='起点广告' border='0' /></a></div><!--起点广告作者专区通栏一-->
+ <!-- <a href="/Book/72613.aspx" target="_blank">
+ 
+ <img border="0" src="http://bigimage.cmfu.com/images/gg01.jpg" width="468" height="60"></a>-->
+ 
+ </td>
+ <td align="center">
+ <img src="http://bigimage.cmfu.com/images/qidian_gg4.gif" width="148" height="60" border="0" /></td>
+ </tr>
+ </table>
+ <table width="990px" border="0" align="center" cellpadding="0" cellspacing="0">
+ <tr>
+ <td height="29" valign="top" bgcolor="#585d71">
+ <table width="100%" height="27" border="0" cellpadding="0" cellspacing="0">
+ <tr>
+ <td width="40" align="center">&nbsp;</td>
+ <td width="73" align="center"><div id="tdIndex" class='headdiv1'><a href="http://www.qidian.com/Default.aspx">首页</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="87" align="center"><div id="tdRank" class="headdiv1"><a id="rank" href="http://www.qidian.com/Book/BookList.aspx" target="_self">排行榜</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="73" align="center"><div class="headdiv1"><a href="http://sosu.qidian.com/default.html" target="_blank" class="dh">搜书</a></div></td> 
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="73" align="center"><div id="tdReview" class="headdiv1"><a href="http://shanda.allyes.com/main/adfclick?db=shanda&bid=533,10244,10946&cid=0,0,0&sid=31091&advid=312&camid=573&show=ignore&url=http://forum.qidian.com/">评论</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="100" align="center"><div id="tdSpace" class="headdiv1"><a href="http://sq.qidian.com/Space/Index.aspx">个人空间</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="87" align="center"><div id="tdClub" class="headdiv1"><a href="http://sq.qidian.com/Club/ClubIndex.aspx">俱乐部</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="73" align="center"><div id="tdSpecial" class="headdiv1"><a href="http://sq.qidian.com/Hot/HotIndex.aspx" target="_self">专题</a></div></td> 
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="100" align="center"><div id="tdAuthor" class="headdiv1"><a href="http://www.qidian.com/Author/AuthorLogin.aspx">作者专区</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="100" align="center"><div id="tdWXWeb" class="headdiv1"><a href='http://www.qidian.com/wxweb/Default.aspx'>无线</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="73" align="center"><div id="tdBilling" class="headdiv1"><a href="http://www.qidian.com/User/UserBilling/DepositChannel.aspx"><font color=yellow>充值</font></a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="73" align="center"><div id="tdHelp" class="headdiv1"><a href="http://www.qidian.com/Help/Help.aspx">帮助</a></div></td>
+ <td width="2" align="center"><img src="/images/head_dt03.gif" width="2" height="25" /></td>
+ <td width="73" align="center"><div id="tdPost" class="headdiv1"><a href="http://www.qidian.com/Author/ApplyAuthorBegin.aspx" target="_blank">投稿</a></div></td>
+ <td width="40" align="center">&nbsp;</td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ <tr>
+ <td height="30" align="center" class="headfont12">
+ <a href="http://www.qidian.com/Book/BookStore.aspx" class="headblack" target="_self"><span id="ctl00_Span1">书库</span></a> ┊ <a href="http://www.qidian.com/book/vipbook.aspx" class="headblack" target="_self">
+ <span id="ctl00_Span2">VIP作品</span></a>· <a href="http://mm.qidian.com/MMWeb/ListPKBook.aspx"
+ class="headblack" target="_blank"><span id="ctl00_Span9">女频作品</span></a>┊ <a href="http://www.qidian.com/Publish/Default.aspx" class="headblack" target="_self" style="color:red">图书</a>
+ ┊ <a href="http://www.qidian.com/book/bookchannel.aspx?channelid=1" class="headblack" target="_self"><span id="ctl00_Span3">玄幻·奇幻</span></a> ┊ <a href="http://www.qidian.com/book/bookchannel.aspx?channelid=2" class="headblack"
+ target="_self"><span id="ctl00_Span4">武侠·仙侠</span></a> ┊ <a href="http://www.qidian.com/book/bookchannel.aspx?channelid=3"
+ target="_self" class="headblack"><span id="ctl00_Span5">都市·言情</span></a>
+ ┊ <a href="http://www.qidian.com/book/bookchannel.aspx?channelid=4" target="_self" class="headblack"><span id="ctl00_Span6">历史·军事</span></a> ┊ <a href="http://www.qidian.com/book/bookchannel.aspx?channelid=5" class="headblack"
+ target="_self"><span id="ctl00_Span7">游戏·竞技</span></a> ┊ <a href="http://www.qidian.com/book/bookchannel.aspx?channelid=6"
+ target="_self" class="headblack"><span id="ctl00_Span8">科幻·灵异</span></a>
+ ┊ <a href="http://www.qidian.com/Book/BookStore.aspx?ChannelId=11" class="headblack" target="_self">美文</a>·<a
+ class="headblack" target="_self" href="http://www.qidian.com/Book/BookStore.aspx?ChannelId=12">同人</a>
+ ┊ <a href="http://www.qidian.com/Book/BookStore.aspx?Type=1" class="headblack" target="_self">全本</a>·<a href="http://www.qidian.com/Book/BookStore.aspx?ChannelId=13" class="headblack" target="_self">剧本</a>
+ ┊<a href="http://www.qidian.com/DMWeb/Default.aspx" class="headblack" target="_self">漫画</a>·<a href="http://www.qidian.com/book/sjgbook.aspx" class="headblack" target="_self">三江</a></td>
+ </tr>
+ </table>
+ <script type="text/javascript">
+ function SetSelectedBackground(current)
+ {
+ if(current)
+ {
+ current.className = 'headdiv2';
+ }
+ }
+ function ChangeSelectedTabBackground(selected)
+ {
+// var table = document.getElementById('menu');
+// var rowLen = table.rows.length;
+// for(var i=0;i<rowLen;i++)
+// {
+// var row = table.rows[i];
+// var cellLen = row.cells.length;
+// for(var j=0;j<cellLen;j++)
+// {
+// var cell = row.cells[j];
+// cell.className = 'headdiv1';
+// }
+// }
+ var curUrl = window.location.href;
+ curUrl = curUrl.toLowerCase(); 
+ //评论
+ if(curUrl.indexOf('forum.cmfu.com/default.aspx') > -1)
+ {
+ SetSelectedBackground($('tdReview'));
+ }
+ //排行榜
+ else if(curUrl.indexOf('/booklist.aspx') > -1)
+ {
+ SetSelectedBackground($('tdRank'));
+ }
+ //专题
+ else if(curUrl.indexOf('/hotindex.aspx') > -1)
+ {
+ SetSelectedBackground($('tdSpecial'));
+ }
+ //个人中心
+ else if(curUrl.indexOf('/space/index.aspx') > -1)
+ {
+ SetSelectedBackground($('tdSpace'));
+ }
+ else if(curUrl.indexOf('/space/') > -1)
+ {
+ SetSelectedBackground($('tdSpace'));
+ }
+ else if(curUrl.indexOf('/user/') > -1)
+ {
+ SetSelectedBackground($('tdSpace'));
+ }
+ else if(curUrl.indexOf('/club/') > -1)
+ {
+ SetSelectedBackground($('tdClub'));
+ }
+ //冲值
+ else if(curUrl.indexOf('/userbilling/') > -1)
+ {
+ SetSelectedBackground($('tdBilling'));
+ }
+ //俱乐部
+ else if(curUrl.indexOf('/club/clubindex.aspx') > -1)
+ {
+ SetSelectedBackground($('tdClub'));
+ }
+ else if(curUrl.indexOf('/contribute/')>=0)
+ {
+ SetSelectedBackground($('tdPost'));
+ }
+ //首页
+ else if(curUrl.indexOf('default.aspx') > -1 || curUrl.indexOf(".aspx") < 0)
+ {
+ SetSelectedBackground($('tdIndex'));
+ }
+ }
+ ChangeSelectedTabBackground();
+ __CheckLogin(); 
+ </script> 
+ <table height="35" width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td align="center" bgcolor="#F5F5F5" style="border: 1px solid #CCCCCC">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search" style="font-size:12px">
+ <tr>
+ <td width="60">&nbsp;
+ </td>
+ <td width="55" align="left" style="vertical-align: middle">
+ <span style="font-family:宋体;font-size:12px"><b>关键字：</b></span>
+ </td>
+ <td width="130" align="left">
+ <input type="text" id="txtwords" class="headinpout2" maxlength="20" onKeyDown="TabSearch();" />
+ </td>
+ <td width="70" align="left" class="headfont12">
+ <select name="searchtype" id="searchtype" class="select">
+ <option value="zh">综合</option>
+ <option value="bn">书名</option>
+ <option value="an">作者</option>
+ <option value="iw">主角</option>
+ <option value="ft">全文</option>
+ </select>
+ </td>
+ <td width="70" align="left">
+ <input id="btnSearch" type="button" onClick="go();" value=" 搜索 " />
+ </td>
+ <td width="52%" align="center" valign="middle">
+<a href="javascript:opwin('卓越','zh');">卓越</a>&nbsp;<a href="javascript:opwin('诸神的黄昏','zh');">诸神的黄昏</a>&nbsp; <a href="javascript:opwin('一路彩虹','zh');">一路彩虹</a>&nbsp; <a href="javascript:opwin('不留名','zh');">不留名</a>&nbsp; <a href="javascript:opwin('变天','zh');">变天</a>&nbsp; <a href="javascript:opwin('星际间谍','zh');">星际间谍</a>&nbsp; <a href="javascript:opwin('卡徒','zh');">卡徒</a>&nbsp; <a href="javascript:opwin('龙蛇演义','zh');">龙蛇演义</a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ </div>
+ <!--头结束-->
+ <!--内容区域-->
+ <div id="mainContent" style="width: 990px;margin-left:auto; margin-right:auto; padding-top:5px;">
+ 
+
+<div class="tgmain">
+ <!--投稿，内容部分-->
+ 
+ <div id="ctl00_MainZonePart_pnlAuthorLogin">
+	 
+ <div class="tgleft">
+ <div class="tgdivbc">
+ <a href="/Index.aspx">起点首页</a> > 投稿
+ </div>
+ <div class="tgdiv1">
+ <!--Step 1-->
+ <table cellspacing="0" cellpadding="10" class="tgdivstep">
+ <tr>
+ <td class="font_14_titleblod">
+ 第一步：您还不是起点作家？</td>
+ </tr>
+ <tr>
+ <td class="font_14_titleblod">
+ <table width="100%" border="0" cellspacing="0" cellpadding="5">
+ <tr>
+ <td class="tgfontzw2">
+ 请先 <a href="/user/login.aspx">登陆</a> 并 <a href='/Author/ApplyAuthorBegin.aspx'>注册起点作家</a> 。 
+ </td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ 
+ <!--Step 2--> 
+ <table id="ctl00_MainZonePart_tablestep2" cellspacing="0" cellpadding="10" class="tgdivstep">
+		<tr>
+			<td class="font_14_titleblod" width="200px">
+ 第二步：您已经是作家？</td>
+		</tr>
+		<tr>
+			<td>
+ <table cellspacing="0" cellpadding="0" width="100%" border="0">
+ <tr>
+ <td width="20%" height="35" align="left" class="font_14_black">
+ 您的作家帐号：</td>
+ <td class="wz01" align="left">
+ <input name="ctl00$MainZonePart$txtAuthorLoginName2" type="text" maxlength="30" id="ctl00_MainZonePart_txtAuthorLoginName2" class="Text" />
+ &nbsp;
+ </td>
+ </tr>
+ <tr>
+ <td height="35" align="left" class="font_14_black">
+ 您的作家密码：</td>
+ <td align="left">
+ <input name="ctl00$MainZonePart$txtAuthorLoginPass2" type="password" maxlength="30" id="ctl00_MainZonePart_txtAuthorLoginPass2" class="Text" />
+ &nbsp;
+ </td>
+ </tr>
+ <tr>
+ <td height="15" colspan="2" align="left">
+ 
+ </td>
+ </tr>
+ <tr>
+ <td height="35" align="left" class="font_14_black">
+ </td>
+ <td align="left">
+ <input type="submit" name="ctl00$MainZonePart$btnLogin" value="登录" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainZonePart$btnLogin&quot;, &quot;&quot;, true, &quot;LoginGroup&quot;, &quot;&quot;, false, false))" id="ctl00_MainZonePart_btnLogin" class="input_btn" />
+ &nbsp;
+ <input type="reset" value="重置" class="input_btn" /></td>
+ </tr>
+ <tr>
+ <td colspan="2" align="left" class="font_14_black" >
+  
+ </td>
+ </tr>
+ </table>
+ </td>
+		</tr>
+	</table>
+	
+ </div>
+ </div>
+ 
+</div>
+ 
+ 
+  
+ 
+ 
+ 
+ <!--投稿，RightBar部分--> 
+ <div class="tgright">
+ <table cellspacing="0" cellpadding="0" class="tgrighttable">
+ <tr>
+ <td class="tgrightbt">
+ &nbsp;起点作者保障计划</td>
+ </tr>
+ <tr>
+ <td style="padding: 10px" class="tgfont12a">
+				·<a href="http://www.qidian.com/ploy/20080630zz/index.htm" target="_blank" style="color:#FF0000">2008年起点作家福利计划</a><br />
+				·<a href="http://www.qidian.com/ploy/20080418/index.htm" target="_blank">起点2.0：盛大开辟网络文学新“起点”,推动传统文化产业发展</a><br />
+ ·<a href="http://ploy.qidian.com/ploy/20070426/zz01.htm" target="_blank">起点中文网白金作家介绍专题</a></td>
+ </tr>
+ </table>
+ <table cellspacing="0" cellpadding="0" class="tgrighttable">
+ <tr>
+ <td class="tgrightbt">
+ &nbsp;作者指南</td>
+ </tr>
+ <tr>
+ <td class="tgfont12a">
+ <table width="100%" border="0" cellspacing="10" cellpadding="0">
+ <tr>
+ <td class="tgfont12a">
+ 1、<a href="http://forum.qidian.com/ThreadDetail.aspx?threadid=90000026" target="_blank">网络商业写作新手指南之选题</a><br />
+ 2、<a href="http://forum.qidian.com/ThreadDetail.aspx?threadid=90000025" target="_blank">新手指南之大纲设定</a><br />
+ 3、<a href="http://forum.qidian.com/ThreadDetail.aspx?threadid=90000024" target="_blank">新手指南之角色塑造</a></td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+		<table cellspacing="0" cellpadding="0" class="tgrighttable">
+ <tr>
+ <td class="tgrightbt">
+ &nbsp;咨询联系</td>
+ </tr>
+ <tr>
+ <td class="tgfont12a">
+ <table width="100%" border="0" cellspacing="10" cellpadding="0">
+ <tr>
+ <td class="tgfont12a">
+ 漫画、小说、诗词散文类作家可联系：<br />
+ 漫画类作者QQ：550679512<br />
+								小说诗词类作者QQ:375585761
+ MAIL：zzkf@cmfu.com<br />
+ 咨询范围：作者专栏申请<br />
+ 注：本QQ拒绝聊天，加入时请说明是“起点专栏申请咨询”</td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ <table cellspacing="0" cellpadding="0" class="tgrighttable">
+ <tr>
+ <td class="tgrightbt">
+ &nbsp;相关公告</td>
+ </tr>
+ <tr>
+ <td class="tgfont12a">
+ <table width="100%" border="0" cellspacing="10" cellpadding="0">
+ <tr>
+ <td class="tgfont12a">
+ &nbsp;&nbsp;&nbsp;&nbsp;根据部分作者反映，使用新浪邮件接收起点的回复邮件，有时候会出现丢失的现象，建议使用“126”、“163”等其他的邮件系统。</td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ <table cellspacing="0" cellpadding="0" class="tgrighttable">
+ <tr>
+ <td class="tgrightbt">
+ &nbsp;相关规定</td>
+ </tr>
+ <tr>
+ <td class="tgfont12a">
+ <table width="100%" border="0" cellspacing="10" cellpadding="0">
+ <tr>
+ <td class="tgfont12a">
+ 1、<a href="/help/tuijian.aspx">申请条件及作品要求</a><br />
+ 2、<a href="/help/qianyue.aspx">原创文学作品网络版权签约制度</a><br />
+ 3、<a href="/help/tougao.aspx#duty">起点专栏作家的权利义务</a></td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ </div>
+</div>
+
+
+ </div>
+ <!--内容区域结束-->
+ <!--脚注-->
+ <div id="footer" style="clear:both;width: 990px;text-align: center;margin-left:auto; margin-right:auto; ">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td height="10">
+ </td>
+ </tr>
+ </table>
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td align="center">
+ <table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top">
+ <tr>
+ <td width="100%" align="center" class="xt" valign="top" style="font-size: 12px; border-top: #c0c0c0 groove;
+ border-bottom: #c0c0c0 1px solid">
+ <div style="padding-top: 3; padding-bottom: 3;text-align:center;">
+ <a href="http://www.qidian.com/aboutus/aboutus.aspx" class="three" target="_blank">关于我们</a> | <a href="http://www.qidian.com/Help/Help.aspx"
+ class="three">用户指南</a> | <a href="http://www.qidian.com/aboutus/ads/advertise.html"
+ target="_blank" class="three"><font color="red">广告服务</font></a> | <a href="http://www.qidian.com/aboutus/ads/copyright.html"
+ target="_blank" class="three">版权行销</a> | <a href="http://www.qidian.com/Help/vipzhidu.aspx"
+ target="_blank" class="three"><font color="red">VIP会员申请</font></a>
+ | <a href="http://www.qidian.com/Help/zuozheshenqing.aspx" target="_blank" class="three"><font color="red">
+ 作者投稿</font></a> | <a href="http://www.qidian.com/User/UserBilling/DepositChannel.aspx" class="three" target="_blank">
+ <font color="red">支付中心</font></a> | <a href="http://www.qidian.com/help/about_link.aspx"
+ target="_blank" class="three">友情连接</a> | <a href="http://sdch.sdo.com/fuwu/qd/cmfu.htm"
+ target="_blank" class="three">客服中心</a> | <a href="http://www.qidian.com/Club/showClub.aspx?ClubID=1598"
+ target="_blank" class="three">提交建议</a> | <a href="http://www.qidian.com/aboutus/retain.aspx" class="three"
+ target="_blank">诚聘英才</a> | <a href="http://www.qidian.com/aboutus/contactus.aspx" class="three"
+ target="_blank">联系我们</a></div>
+ </td>
+ </tr>
+ </table>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top">
+ <tr>
+ <td width="100%" align="center" class="xt" valign="top" style="line-height: 220%;
+ font-size: 12px; line-height: 150%;padding-top:5px">
+									<iframe id="baiduframe1" border="0" vspace="0" hspace="0" marginwidth="0" marginheight="0" framespacing="0" frameborder="0" scrolling="no" width="610" height="40" src="http://cj.qidian.com/include/bottom_snda1.htm">
+</iframe><br />
+ Copyright (C) 2002-2008 www.qidian.com All Rights Reserved 版权所有 上海玄霆娱乐信息科技有限公司 <a href="http://www.miibeian.gov.cn/" target="_blank" style="color:black">沪ICP备08017520</a><br>
+ 上海盛大网络发展有限公司&nbsp;&nbsp;增值电信业务经营许可证B2-20040053号&nbsp;&nbsp;文网文[2003]0002号&nbsp;&nbsp;新出网证(沪)字002<br />
+ </td>
+ </tr>
+ </table>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top" align="center">
+ <tr>
+ <td align="center" class="xt" style="font-size: 12px; line-height: 150%;">
+ <span class="xt"><font color="blue">请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！</font>
+ </span>
+ <br>
+ 本站所收录作品、社区话题、书库评论及本站所做之广告均属其个人行为，与本站立场无关
+ </td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+ </table>
+ </div>
+ <script type="text/javascript">
+ UserAct();
+// if(document.readyState=="interactive" || document.readyState=="complete"
+// || typeof(document.readyState) == "undefined") //firefox
+// {
+ document.getElementById("loading").style.display = "none";
+ //}
+ </script>
+ <!--脚注结束-->
+ 
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWBAK/6NbJBgLog5bWAQLag+aGBwKS660BaODjMwzvfxDAWUV3uxw5VAsfo74=" /></form>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-5769277-1";
+urchinTracker();
+</script>
+<span style="display:none"><SCRIPT type='text/javascript' language='JavaScript' src='http://xslt.alexa.com/site_stats/js/t/a?url=www.qidian.com'></SCRIPT></span>
+</body>
+</html><!-- 58.222.16.144 --><!-- XINQIDIAN-WEB18 --><!-- 2008-11-16 6:26:51 -->   <!-- exe: 0 -->
+<!--Accept:
+Accept-Encoding:
+Cache-Control:max-age=259200
+User-Agent:
+ContentType:text/html
+--><script src='/javascript/Perform.js?t=080813' type='text/javascript'></script>

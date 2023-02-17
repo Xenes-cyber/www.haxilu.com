@@ -1,0 +1,1 @@
+document.writeln("<table><tr><td><div class=\"blockcontent\"><font color=\"#FF5151\"></FONT>书友请加<font color=\"#FF5151\">QQ群29314444</FONT>交流<br></div></td></tr></table><table><tr><td>
